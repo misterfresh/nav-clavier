@@ -1,0 +1,32 @@
+.item {
+  border: 0.1rem solid #eeeeee;
+  color: black;
+  background: #dddddd;
+  margin-left: 1rem;
+}
+
+h3.selected,
+.selected {
+  border: 0.1rem solid #000000;
+  color: blue;
+  background: #eeeeee;
+}
+
+.channel {
+  width: 7rem;
+  height: 7rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.show {
+  width: 11rem;
+  height: 11rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.navlink {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}

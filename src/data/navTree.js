@@ -1,0 +1,33 @@
+export const navTree = [
+  ['▶', 'Reprendre', 'En ce moment à la télé'],
+  [
+    { label: 'Quoi de neuf?' },
+    { label: 'Chaînes' },
+    { label: 'Catégories' },
+    { label: 'Mes enregistrements' },
+    { label: 'Rechercher' },
+    { label: 'Paramètres' },
+  ],
+  [
+    { label: 'INA' },
+    { label: 'W9' },
+    { label: 'Breizh' },
+    { label: 'C8' },
+    { label: 'Action' },
+    { label: 'Adult Swim' },
+    { label: '5' },
+    { label: '2' },
+  ],
+  [
+    { label: 'Dans les griffes du stripteaseur' },
+    { label: 'ça commence aujourdhui' },
+    { label: 'Rex' },
+    { label: 'Allo Docteurs' },
+    { label: 'Une idylle dAutomne' },
+    { label: 'Sous le sable' },
+    { label: 'NCIS' },
+    { label: 'Arabesque' },
+    { label: 'Charmed' },
+    { label: 'Cobra' },
+  ],
+];
