@@ -2,10 +2,11 @@
   "name": "nav-clavier",
   "version": "1.0.0",
   "description": "poc navigation au clavier",
-  "main": "app.js",
+  "main": "./src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node ./dev/server.js",
+    "build": "node ./build/build.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,13 @@
     "url": "https://github.com/misterfresh/nav-clavier/issues"
   },
   "homepage": "https://github.com/misterfresh/nav-clavier#readme",
+  "browserslist": [
+    "IE 11"
+  ],
   "devDependencies": {
-    "rollup": "^2.3.0"
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "rollup": "^2.3.0",
+    "rollup-plugin-babel": "^4.4.0"
   }
 }

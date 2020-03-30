@@ -4,8 +4,14 @@ const fs = require('fs');
 const path = require('path');
 const port = process.argv[2] || 8080;
 
-const index = fs.readFileSync(path.join(process.cwd(), 'index.html'), 'utf8');
-const notFound = fs.readFileSync(path.join(process.cwd(), '404.html'), 'utf8');
+const index = fs.readFileSync(
+  path.join(process.cwd(), 'dev', 'index.html'),
+  'utf8',
+);
+const notFound = fs.readFileSync(
+  path.join(process.cwd(), 'dev', '404.html'),
+  'utf8',
+);
 
 http
   .createServer(function (req, res) {
