@@ -14,30 +14,27 @@ export const AppNavigation = {
   },
   computed: {
     isHome() {
-      return !(this.navCoords[0] === 1 && this.navCoords[1] !== 0);
+      return !(this.navCoords[0] === 0 && this.navCoords[1] !== 0);
     },
   },
   template: `<div style="max-width: 70rem;">
         <div style="color: #eee;">Utiliser les flèches du clavier pour naviguer.</div>
         <UpperNav 
             :navCoords="navCoords" 
-            :upperLinks="navTree[1]"
-            :title="navTree[0][0]"
+            :upperLinks="navTree[0]"
         />
         <ResumeChannel
             v-if="isHome"
             :navCoords="navCoords" 
-            :channels="navTree[2]"
-            :title="navTree[0][1]"
+            :channels="navTree[1]"
         />
         <NowOnTv
             v-if="isHome"
             :navCoords="navCoords" 
-            :shows="navTree[3]"
-            :title="navTree[0][2]"
+            :shows="navTree[2]"
         />
         <div v-if="!isHome">
-            <h1 style="color: #eee;">On Page {{navTree[1][navCoords[1]]['label']}}</h1>
+            <h1 style="color: #eee;">On Page {{navTree[0][navCoords[1]]['label']}}</h1>
         </div>
     </div>`,
   methods: {
@@ -66,27 +63,29 @@ export const AppNavigation = {
         }
         case 'UP': {
           if (this.navCoords[0] === 0) {
-            updatedCoords[0] = 0;
-            updatedCoords[1] = 0;
+            updatedCoords[0] = this.navTree.length - 1;
           } else {
-            updatedCoords[0] = 0;
-            updatedCoords[1] = this.navCoords[0] - 1;
+            updatedCoords[0]--;
           }
+          updatedCoords[1] = 0;
           break;
         }
-
         case 'DOWN': {
-          if (this.navCoords[0] === 0) {
-            updatedCoords[0] = this.navCoords[1] + 1;
-            updatedCoords[1] = 0;
+          if (this.navCoords[0] === this.navTree.length - 1) {
+            updatedCoords[0] = 0;
           } else {
-            if (this.navCoords[0] > 1) {
-              alert(
-                `Watching ${
-                  this.navTree[this.navCoords[0]][this.navCoords[1]]['label']
-                }`,
-              );
-            }
+            updatedCoords[0]++;
+          }
+          updatedCoords[1] = 0;
+          break;
+        }
+        case 'ENTER': {
+          if (this.navCoords[0] > 0) {
+            alert(
+              `Watching ${
+                this.navTree[this.navCoords[0]][this.navCoords[1]]['label']
+              }!`,
+            );
           }
           break;
         }
@@ -104,6 +103,8 @@ export const AppNavigation = {
           return 'UP';
         case 'ArrowDown':
           return 'DOWN';
+        case 'Enter':
+          return 'ENTER';
       }
       // Fallback to keycodes
       const keyCode = event.keyCode;
@@ -116,6 +117,8 @@ export const AppNavigation = {
           return 'UP';
         case DOWN:
           return 'DOWN';
+        case ENTER:
+          return 'ENTER';
       }
     },
   },

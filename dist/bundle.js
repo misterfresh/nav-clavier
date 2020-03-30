@@ -11762,12 +11762,15 @@
     },
     methods: {
       isSelected: function isSelected(index, navCoords) {
-        return navCoords[0] === 1 && navCoords[1] === index;
+        return navCoords[0] === 0 && navCoords[1] === index;
+      },
+      refName: function refName(index) {
+        return "navlink".concat(index);
       }
     },
-    template: "<nav style=\"display: flex; padding: 1rem;\">\n        <div style=\"color: #eee;\">{{JSON.stringify(navCoords)}}</div>\n        <button class='item' :class=\"{selected: selectedTitle}\" ref=\"initialPosition\">\n            {{title}}\n          </button>\n        <button class='item navlink' v-for=\"(link, index) in upperLinks\" \n            style=\"marginLeft: 1rem;\" \n            :class=\"{selected: isSelected(index, navCoords)}\"\n        >{{link.label}}</button>\n</nav>",
+    template: "<nav style=\"display: flex; padding: 1rem;\">\n        <div style=\"color: #eee;\">{{JSON.stringify(navCoords)}}</div>\n        <button class='item navlink' v-for=\"(link, index) in upperLinks\" \n            style=\"marginLeft: 1rem;\" \n            :class=\"{selected: isSelected(index, navCoords)}\"\n            :ref=\"refName(index)\"\n        >{{link.label}}</button>\n</nav>",
     mounted: function mounted() {
-      this.$refs.initialPosition.focus();
+      this.$refs.navlink0[0].focus();
     }
   };
 
@@ -11776,15 +11779,15 @@
     props: ['navCoords', 'title', 'channels'],
     computed: {
       selectedTitle: function selectedTitle() {
-        return this.navCoords[0] === 0 && this.navCoords[1] === 1;
+        return this.navCoords[0] === 1;
       }
     },
     methods: {
       isSelected: function isSelected(index, navCoords) {
-        return navCoords[0] === 2 && navCoords[1] === index;
+        return navCoords[0] === 1 && navCoords[1] === index;
       }
     },
-    template: "<section style=\"padding: 1rem;\">\n        <h3 class='item' :class=\"{selected: selectedTitle}\">\n                {{title}}\n              </h3>\n        <div style=\"display: flex; flex-wrap: wrap;\">\n            <button class='item channel' v-for=\"(channel, index) in channels\" \n                style=\"marginLeft: 1rem;\" \n                :class=\"{selected: isSelected(index, navCoords)}\"\n            >{{channel.label}}</button>\n        </div>\n</section>"
+    template: "<section style=\"padding: 1rem;\">\n        <h3 class='item' :class=\"{selected: selectedTitle}\">\n                Reprendre\n              </h3>\n        <div style=\"display: flex; flex-wrap: wrap;\">\n            <button class='item channel' v-for=\"(channel, index) in channels\" \n                style=\"marginLeft: 1rem;\" \n                :class=\"{selected: isSelected(index, navCoords)}\"\n            >{{channel.label}}</button>\n        </div>\n</section>"
   };
 
   var NowOnTv = {
@@ -11792,23 +11795,24 @@
     props: ['navCoords', 'title', 'shows'],
     computed: {
       selectedTitle: function selectedTitle() {
-        return this.navCoords[0] === 0 && this.navCoords[1] === 2;
+        return this.navCoords[0] === 2;
       }
     },
     methods: {
       isSelected: function isSelected(index, navCoords) {
-        return navCoords[0] === 3 && navCoords[1] === index;
+        return navCoords[0] === 2 && navCoords[1] === index;
       }
     },
-    template: "<section style=\"padding: 1rem;\">\n        <h3 class='item' :class=\"{selected: selectedTitle}\">\n                {{title}}\n              </h3>\n        <div style=\"display: flex; flex-wrap: wrap;\">\n            <button class='item show' v-for=\"(show, index) in shows\" \n                style=\"marginLeft: 1rem;\" \n                :class=\"{selected: isSelected(index, navCoords)}\"\n            >{{show.label}}</button>\n        </div>\n</section>"
+    template: "<section style=\"padding: 1rem;\">\n        <h3 class='item' :class=\"{selected: selectedTitle}\">\n                En ce moment \xE0 la t\xE9l\xE9\n              </h3>\n        <div style=\"display: flex; flex-wrap: wrap;\">\n            <button class='item show' v-for=\"(show, index) in shows\" \n                style=\"marginLeft: 1rem;\" \n                :class=\"{selected: isSelected(index, navCoords)}\"\n            >{{show.label}}</button>\n        </div>\n</section>"
   };
 
   var LEFT = 37;
   var UP = 38;
   var RIGHT = 39;
   var DOWN = 40;
+  var ENTER = 13;
 
-  var navTree = [['▶', 'Reprendre', 'En ce moment à la télé'], [{
+  var navTree = [[{
     label: 'Quoi de neuf?'
   }, {
     label: 'Chaînes'
@@ -11868,10 +11872,10 @@
     },
     computed: {
       isHome: function isHome() {
-        return !(this.navCoords[0] === 1 && this.navCoords[1] !== 0);
+        return !(this.navCoords[0] === 0 && this.navCoords[1] !== 0);
       }
     },
-    template: "<div style=\"max-width: 70rem;\">\n        <div style=\"color: #eee;\">Utiliser les fl\xE8ches du clavier pour naviguer.</div>\n        <UpperNav \n            :navCoords=\"navCoords\" \n            :upperLinks=\"navTree[1]\"\n            :title=\"navTree[0][0]\"\n        />\n        <ResumeChannel\n            v-if=\"isHome\"\n            :navCoords=\"navCoords\" \n            :channels=\"navTree[2]\"\n            :title=\"navTree[0][1]\"\n        />\n        <NowOnTv\n            v-if=\"isHome\"\n            :navCoords=\"navCoords\" \n            :shows=\"navTree[3]\"\n            :title=\"navTree[0][2]\"\n        />\n        <div v-if=\"!isHome\">\n            <h1 style=\"color: #eee;\">On Page {{navTree[1][navCoords[1]]['label']}}</h1>\n        </div>\n    </div>",
+    template: "<div style=\"max-width: 70rem;\">\n        <div style=\"color: #eee;\">Utiliser les fl\xE8ches du clavier pour naviguer.</div>\n        <UpperNav \n            :navCoords=\"navCoords\" \n            :upperLinks=\"navTree[0]\"\n        />\n        <ResumeChannel\n            v-if=\"isHome\"\n            :navCoords=\"navCoords\" \n            :channels=\"navTree[1]\"\n        />\n        <NowOnTv\n            v-if=\"isHome\"\n            :navCoords=\"navCoords\" \n            :shows=\"navTree[2]\"\n        />\n        <div v-if=\"!isHome\">\n            <h1 style=\"color: #eee;\">On Page {{navTree[0][navCoords[1]]['label']}}</h1>\n        </div>\n    </div>",
     methods: {
       navigate: function navigate(event) {
         var direction = this.getDirectionFromEvent(event);
@@ -11904,25 +11908,31 @@
           case 'UP':
             {
               if (this.navCoords[0] === 0) {
-                updatedCoords[0] = 0;
-                updatedCoords[1] = 0;
+                updatedCoords[0] = this.navTree.length - 1;
               } else {
-                updatedCoords[0] = 0;
-                updatedCoords[1] = this.navCoords[0] - 1;
+                updatedCoords[0]--;
               }
 
+              updatedCoords[1] = 0;
               break;
             }
 
           case 'DOWN':
             {
-              if (this.navCoords[0] === 0) {
-                updatedCoords[0] = this.navCoords[1] + 1;
-                updatedCoords[1] = 0;
+              if (this.navCoords[0] === this.navTree.length - 1) {
+                updatedCoords[0] = 0;
               } else {
-                if (this.navCoords[0] > 1) {
-                  alert("Watching ".concat(this.navTree[this.navCoords[0]][this.navCoords[1]]['label']));
-                }
+                updatedCoords[0]++;
+              }
+
+              updatedCoords[1] = 0;
+              break;
+            }
+
+          case 'ENTER':
+            {
+              if (this.navCoords[0] > 0) {
+                alert("Watching ".concat(this.navTree[this.navCoords[0]][this.navCoords[1]]['label'], "!"));
               }
 
               break;
@@ -11946,6 +11956,9 @@
 
           case 'ArrowDown':
             return 'DOWN';
+
+          case 'Enter':
+            return 'ENTER';
         } // Fallback to keycodes
 
 
@@ -11963,6 +11976,9 @@
 
           case DOWN:
             return 'DOWN';
+
+          case ENTER:
+            return 'ENTER';
         }
       }
     },

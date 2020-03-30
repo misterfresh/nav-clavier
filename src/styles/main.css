@@ -11,10 +11,6 @@
   background: #eeeeee;
 }
 
-.item.selected:focus {
-  color: green;
-}
-
 .channel {
   width: 7rem;
   height: 7rem;

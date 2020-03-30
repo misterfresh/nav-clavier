@@ -1,5 +1,4 @@
 export const navTree = [
-  ['▶', 'Reprendre', 'En ce moment à la télé'],
   [
     { label: 'Quoi de neuf?' },
     { label: 'Chaînes' },
