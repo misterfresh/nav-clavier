@@ -42,10 +42,10 @@ export const AppNavigation = {
     </div>`,
   methods: {
     navigate(event) {
-      const keyCode = event.keyCode;
+      const direction = this.getDirectionFromEvent(event);
       const updatedCoords = [...this.navCoords];
-      switch (keyCode) {
-        case LEFT: {
+      switch (direction) {
+        case 'LEFT': {
           if (this.navCoords[1] === 0) {
             updatedCoords[1] = this.navTree[this.navCoords[0]].length - 1;
           } else {
@@ -53,7 +53,7 @@ export const AppNavigation = {
           }
           break;
         }
-        case RIGHT: {
+        case 'RIGHT': {
           if (
             this.navCoords[1] ===
             this.navTree[this.navCoords[0]].length - 1
@@ -64,7 +64,7 @@ export const AppNavigation = {
           }
           break;
         }
-        case UP: {
+        case 'UP': {
           if (this.navCoords[0] === 0) {
             updatedCoords[0] = 0;
             updatedCoords[1] = 0;
@@ -74,8 +74,8 @@ export const AppNavigation = {
           }
           break;
         }
-        case ENTER:
-        case DOWN: {
+
+        case 'DOWN': {
           if (this.navCoords[0] === 0) {
             updatedCoords[0] = this.navCoords[1] + 1;
             updatedCoords[1] = 0;
@@ -93,7 +93,33 @@ export const AppNavigation = {
       }
       this.navCoords = updatedCoords;
     },
+    getDirectionFromEvent(event) {
+      const code = event.code;
+      switch (code) {
+        case 'ArrowLeft':
+          return 'LEFT';
+        case 'ArrowRight':
+          return 'RIGHT';
+        case 'ArrowUp':
+          return 'UP';
+        case 'ArrowDown':
+          return 'DOWN';
+      }
+      // Fallback to keycodes
+      const keyCode = event.keyCode;
+      switch (keyCode) {
+        case LEFT:
+          return 'LEFT';
+        case RIGHT:
+          return 'RIGHT';
+        case UP:
+          return 'UP';
+        case DOWN:
+          return 'DOWN';
+      }
+    },
   },
+
   components: {
     UpperNav,
     ResumeChannel,

@@ -1,0 +1,23 @@
+{
+  "name": "nav-clavier",
+  "version": "1.0.0",
+  "description": "poc navigation au clavier",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misterfresh/nav-clavier.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/misterfresh/nav-clavier/issues"
+  },
+  "homepage": "https://github.com/misterfresh/nav-clavier#readme",
+  "devDependencies": {
+    "rollup": "^2.3.0"
+  }
+}

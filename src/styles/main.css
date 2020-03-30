@@ -5,11 +5,14 @@
   margin-left: 1rem;
 }
 
-h3.selected,
 .selected {
   border: 0.1rem solid #000000;
   color: blue;
   background: #eeeeee;
+}
+
+.item.selected:focus {
+  color: green;
 }
 
 .channel {

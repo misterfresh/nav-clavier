@@ -13,12 +13,15 @@ export const UpperNav = {
   },
   template: `<nav style="display: flex; padding: 1rem;">
         <div style="color: #eee;">{{JSON.stringify(navCoords)}}</div>
-        <h3 class='item' :class="{selected: selectedTitle}">
+        <button class='item' :class="{selected: selectedTitle}" ref="initialPosition">
             {{title}}
-          </h3>
-        <h3 class='item navlink' v-for="(link, index) in upperLinks" 
+          </button>
+        <button class='item navlink' v-for="(link, index) in upperLinks" 
             style="marginLeft: 1rem;" 
             :class="{selected: isSelected(index, navCoords)}"
-        >{{link.label}}</h3>
+        >{{link.label}}</button>
 </nav>`,
+  mounted() {
+    this.$refs.initialPosition.focus();
+  },
 };
